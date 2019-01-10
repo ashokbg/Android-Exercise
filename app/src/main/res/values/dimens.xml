@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="dimens_0">0dp</dimen>
+    <dimen name="dimens_1">1dp</dimen>
+    <dimen name="dimens_2">2dp</dimen>
+    <dimen name="dimens_3">3dp</dimen>
+    <dimen name="_1sdp">1.00dp</dimen>
+    <dimen name="dimens_4">4dp</dimen>
+    <dimen name="dimens_5">5dp</dimen>
+    <dimen name="dimens_20">20dp</dimen>
+    <dimen name="dimens_10">10dp</dimen>
+
+
+    <!-- Text Size -->
+    <dimen name="dimens_5sp">5dp</dimen>
+    <dimen name="dimens_6sp">6sp</dimen>
+    <dimen name="dimens_7sp">7sp</dimen>
+    <dimen name="dimens_8sp">8sp</dimen>
+    <dimen name="dimens_10sp">10sp</dimen>
+    <dimen name="dimens_11sp">11sp</dimen>
+    <dimen name="dimens_12sp">12sp</dimen>
+    <dimen name="dimens_13sp">13sp</dimen>
+    <dimen name="dimens_14sp">14sp</dimen>
+    <dimen name="dimens_15sp">15sp</dimen>
+    <dimen name="dimens_16sp">16sp</dimen>
+    <dimen name="dimens_17sp">17sp</dimen>
+    <dimen name="dimens_18sp">18sp</dimen>
+    <dimen name="dimens_19sp">19sp</dimen>
+    <dimen name="dimens_20sp">20sp</dimen>
+    <dimen name="dimens_22sp">22sp</dimen>
+    <dimen name="dimens_24sp">24sp</dimen>
+    <dimen name="dimens_25sp">25sp</dimen>
+    <dimen name="dimens_26sp">26sp</dimen>
+    <dimen name="dimens_28sp">28sp</dimen>
+    <dimen name="dimens_29sp">29sp</dimen>
+
+
+</resources>
