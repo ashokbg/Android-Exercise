@@ -13,9 +13,9 @@ import kotlinx.android.synthetic.main.item_facts.*
 class FactsAdapter(private val onItemClick: (item: Row?) -> Unit) :
     RecyclerView.Adapter<FactsAdapter.FactsViewHolder>() {
 
-    var list: ArrayList<Row>? = null
+    var list: List<Row>? = null
 
-    fun addList(list: ArrayList<Row>) {
+    fun addList(list: List<Row>) {
         this.list = list
         notifyDataSetChanged()
     }
@@ -25,7 +25,7 @@ class FactsAdapter(private val onItemClick: (item: Row?) -> Unit) :
     }
 
     override fun getItemCount(): Int {
-        return if (list != null && list!!.size > 0) list!!.size else 0
+        return if (list != null && list!!.isNotEmpty()) list!!.size else 0
     }
 
     override fun onBindViewHolder(viewHolder: FactsAdapter.FactsViewHolder, position: Int) {

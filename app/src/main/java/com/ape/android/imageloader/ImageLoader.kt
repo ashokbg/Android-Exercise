@@ -1,18 +1,13 @@
 package com.ape.android.imageloader
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.net.Uri
 import android.support.v4.widget.CircularProgressDrawable
-import android.support.v7.content.res.AppCompatResources
 import android.util.Log
 import android.widget.ImageView
 import com.ape.R
-import com.ape.android.api.ApiConstants
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.target.Target
-import java.io.File
 
 object ImageLoader {
     var TAG = ImageLoader::class.java.simpleName
