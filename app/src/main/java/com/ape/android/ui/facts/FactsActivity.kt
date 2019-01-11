@@ -55,10 +55,10 @@ class FactsActivity : DaggerAppCompatActivity(), FactsContract.View {
         facts?.apply {
             setTitle(facts.title)
             if (rows != null && rows.isNotEmpty()) {
-                updateUiState(R.id.rv_facts)
                 factsList = rows.filterNotNull()
                 factsList = rows.filter { it!!.title != null && it.description != null && it.imageHref != null }
                 if (factsList != null && factsList!!.isNotEmpty()) {
+                    updateUiState(R.id.rv_facts)
                     adapter.addList((factsList as List<Row>?)!!)
                     return
                 }
