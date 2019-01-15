@@ -10,7 +10,7 @@ class FactsPresenter @Inject constructor(
 ) : FactsContract.Presenter {
 
     var view: FactsContract.View? = null
-    var subscription = CompositeDisposable()
+    val subscription = CompositeDisposable()
 
     override fun takeView(view: FactsContract.View?) {
         this.view = view

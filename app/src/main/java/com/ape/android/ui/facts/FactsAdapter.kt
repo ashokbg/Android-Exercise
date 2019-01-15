@@ -20,17 +20,13 @@ class FactsAdapter(private val onItemClick: (item: Row?) -> Unit) :
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, type: Int): FactsAdapter.FactsViewHolder {
-        return FactsViewHolder(parent.inflate(R.layout.item_facts))
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, type: Int): FactsAdapter.FactsViewHolder =
+        FactsViewHolder(parent.inflate(R.layout.item_facts))
 
-    override fun getItemCount(): Int {
-        return if (list != null && list!!.isNotEmpty()) list!!.size else 0
-    }
+    override fun getItemCount(): Int = if (list != null && list!!.isNotEmpty()) list!!.size else 0
 
-    override fun onBindViewHolder(viewHolder: FactsAdapter.FactsViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: FactsAdapter.FactsViewHolder, position: Int) =
         viewHolder.bind(list!![position])
-    }
 
     inner class FactsViewHolder(override val containerView: View?) : RecyclerView.ViewHolder(containerView!!),
         LayoutContainer {

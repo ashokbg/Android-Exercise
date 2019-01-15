@@ -3,4 +3,5 @@
     <string name="something_went_wrong">Woops Something Went Wrong</string>
     <string name="refresh">Refresh</string>
     <string name="no_data_found">No data found</string>
+    <string name="menu_refresh">refresh</string>
 </resources>
