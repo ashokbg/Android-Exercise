@@ -16,7 +16,6 @@ class FactsActivity : DaggerAppCompatActivity(), FactsContract.View {
 
     @Inject
     lateinit var presenter: FactsPresenter
-
     lateinit var adapter: FactsAdapter
     lateinit var lmanager: LinearLayoutManager
     var factsList: List<Row?>? = null
@@ -31,11 +30,15 @@ class FactsActivity : DaggerAppCompatActivity(), FactsContract.View {
         adapter = FactsAdapter { item ->
             item?.let { toast("${it.title} clicked ") }
         }
-        lmanager = LinearLayoutManager(this@FactsActivity)
+        lmanager = LinearLayoutManager(this)
         rv_facts.apply {
             layoutManager = lmanager
             adapter = this@FactsActivity.adapter
             addDivider(lmanager)
+        }
+        swipe_refresh_layout.setOnRefreshListener {
+            updateUiState(R.id.progress_bar)
+            showFactsLoading()
         }
         btn_action.setOnClickListener { showFactsLoading() }
     }
@@ -77,22 +80,34 @@ class FactsActivity : DaggerAppCompatActivity(), FactsContract.View {
     override fun updateUiState(res: Int) {
         when (res) {
             R.id.progress_bar -> {
+                swipe_refresh_layout.isRefreshing = false
                 progress_bar.makeVisible(true)
                 layout_error.makeVisible(false)
-                rv_facts.makeVisible(false)
+                swipe_refresh_layout.makeVisible(false)
             }
             R.id.layout_error -> {
+                swipe_refresh_layout.isRefreshing = false
                 progress_bar.makeVisible(false)
                 layout_error.makeVisible(true)
-                rv_facts.makeVisible(false)
+                swipe_refresh_layout.makeVisible(false)
             }
             R.id.rv_facts -> {
+                swipe_refresh_layout.isRefreshing = false
                 progress_bar.makeVisible(false)
                 layout_error.makeVisible(false)
-                rv_facts.makeVisible(true)
+                swipe_refresh_layout.makeVisible(true)
 
             }
+            R.id.swipe_refresh_layout -> {
+                swipe_refresh_layout.isRefreshing = true
+                progress_bar.makeVisible(true)
+                layout_error.makeVisible(false)
+            }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroy() {
