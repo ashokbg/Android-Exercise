@@ -1,9 +1,13 @@
 package com.ape.android.di
 
 import android.content.Context
-import com.ape.android.api.*
+import com.ape.android.api.ApiConstants
+import com.ape.android.api.ApiService
+import com.ape.android.api.LiveNetworkMonitor
+import com.ape.android.api.NetworkMonitor
 import dagger.Module
 import dagger.Provides
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,16 +34,24 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkhttpBuilder(networkMonitor: NetworkMonitor): OkHttpClient.Builder {
+    fun provideOkhttpBuilder(networkMonitor: NetworkMonitor, context: Context): OkHttpClient.Builder {
+        val cacheSize = (5 * 1024 * 1024).toLong()
+        val myCache = Cache(context.cacheDir, cacheSize)
         val okHttpBuilder = OkHttpClient.Builder()
         okHttpBuilder.apply {
+            cache(myCache)
             readTimeout(40, TimeUnit.SECONDS)
             writeTimeout(40, TimeUnit.SECONDS)
             addInterceptor { chain ->
+                val request = chain.request()
                 if (networkMonitor.isConnected()) {
-                    val mChain = chain.request().newBuilder()
-                    return@addInterceptor chain.proceed(mChain.build())
-                } else throw  NoNetworkException()
+                    request.newBuilder().header("Cache-Control", "public, max-age=" + 5).build()
+                    return@addInterceptor chain.proceed(request)
+                } else {
+                    request.newBuilder()
+                        .header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7).build()
+                    chain.proceed(request)
+                }
             }
         }
         return okHttpBuilder

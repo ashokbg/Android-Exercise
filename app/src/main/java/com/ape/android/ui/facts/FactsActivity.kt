@@ -72,7 +72,6 @@ class FactsActivity : DaggerAppCompatActivity(), FactsContract.View {
     }
 
     override fun showErrorMsg(throwable: Throwable, apiType: String) {
-        //toast(throwable.message ?: getString(R.string.something_went_wrong))
         updateUiState(R.id.layout_error)
         tv_message.text = throwable.message ?: getString(R.string.no_data_found)
     }

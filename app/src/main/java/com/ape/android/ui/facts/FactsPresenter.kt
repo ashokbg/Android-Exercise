@@ -1,7 +1,11 @@
 package com.ape.android.ui.facts
+
 import com.ape.android.api.ApiService
+import com.ape.android.api.NetworkMonitor
+import com.ape.android.api.NoNetworkException
 import com.ape.android.schedulers.BaseScheduler
 import io.reactivex.disposables.CompositeDisposable
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class FactsPresenter @Inject constructor(
@@ -11,6 +15,8 @@ class FactsPresenter @Inject constructor(
 
     var view: FactsContract.View? = null
     val subscription = CompositeDisposable()
+    @Inject
+    lateinit var networkMonitor: NetworkMonitor
 
     override fun takeView(view: FactsContract.View?) {
         this.view = view
@@ -20,7 +26,12 @@ class FactsPresenter @Inject constructor(
         subscription.add(
             apiService.loadFacts().subscribeOn(baseScheduler.io())
                 .observeOn(baseScheduler.ui())
-                .subscribe({ view?.showFacts(it) }, { view?.showErrorMsg(it) })
+                .subscribe({ view?.showFacts(it) }, {
+                    if (it is UnknownHostException && !networkMonitor.isConnected())
+                        view?.showErrorMsg(NoNetworkException())
+                    else
+                        view?.showErrorMsg(it)
+                })
         )
     }
 
