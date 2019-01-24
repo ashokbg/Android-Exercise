@@ -8,6 +8,7 @@ import com.ape.android.schedulers.ImmediateSchedulerProvider
 import com.ape.android.ui.facts.FactsContract
 import com.ape.android.ui.facts.FactsPresenter
 import io.reactivex.Observable
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -47,6 +48,11 @@ class FactPresenterTest {
     }
 
     @Test
+    fun checkIfViewIsTaken(){
+        factsPresenter.takeView(view)
+        assertNotNull(factsPresenter.view)
+    }
+    @Test
     fun fetchFactsShouldLoadDataIntoView() {
         `when`(apiService.loadFacts()).thenReturn(Observable.just(facts))
         factsPresenter.takeView(view)
@@ -63,4 +69,17 @@ class FactPresenterTest {
         factsPresenter.loadFacts()
         verify(view).showErrorMsg(exception)
     }
+
+    @Test
+    fun checkIfObservableDisposed(){
+        factsPresenter.dropView()
+        assertEquals(0,factsPresenter.subscription.size())
+    }
+
+    @Test
+    fun checkIfViewIsDropped(){
+        factsPresenter.dropView()
+        assertNull(factsPresenter.view)
+    }
+
 }

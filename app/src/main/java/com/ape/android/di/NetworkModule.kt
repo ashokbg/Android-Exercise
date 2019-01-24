@@ -38,7 +38,7 @@ class NetworkModule {
         val cacheSize = (5 * 1024 * 1024).toLong()
         val myCache = Cache(context.cacheDir, cacheSize)
         val okHttpBuilder = OkHttpClient.Builder()
-        okHttpBuilder.apply {
+        return okHttpBuilder.apply {
             cache(myCache)
             readTimeout(40, TimeUnit.SECONDS)
             writeTimeout(40, TimeUnit.SECONDS)
@@ -54,14 +54,12 @@ class NetworkModule {
                 }
             }
         }
-        return okHttpBuilder
+
     }
 
 
     @Singleton
     @Provides
-    fun networkMonitor(context: Context): NetworkMonitor {
-        return LiveNetworkMonitor(context)
-    }
+    fun networkMonitor(context: Context): NetworkMonitor = LiveNetworkMonitor(context)
 
 }
